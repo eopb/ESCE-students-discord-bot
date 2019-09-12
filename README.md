@@ -8,4 +8,5 @@ https://discordpy.readthedocs.io/en/latest/api.html#
 python3
 ```
 pip3 install -U discord.py
+pip install -U python-dotenv
 ```
