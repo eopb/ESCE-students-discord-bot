@@ -1,0 +1,2 @@
+# ESCE students discord bot
+
