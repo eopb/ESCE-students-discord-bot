@@ -1,6 +1,6 @@
 # bot.py
 import os
-
+import re
 import discord
 from dotenv import load_dotenv
 
@@ -44,7 +44,13 @@ async def on_message(message):
 
     print(message.channel.name)
 
-    if message.content.lower() == '?join':
+    if message.channel.name == "welcome-room":
+        username = re.search('\?username .*', message.content)
+        if username != None:
+            username = username.group(0)[10:]
+            user = message.author
+            await user.edit(nick=username)
+    elif message.content.lower() == '?join':
         await message.channel.send("Hi")
         role = discord.utils.get(guild.roles, name="member")
         await message.author.add_roles(role)
