@@ -26,7 +26,14 @@ async def on_ready():
 async def on_member_join(member):
     guild = discord.utils.get(client.guilds, name=GUILD)
     welcome_room = discord.utils.get(guild.channels, name="welcome-room")
-    await welcome_room.send("Hi")
+    # maybe post reminder message to non member users ever so often
+    await welcome_room.send("Hello and welcome " + member.mention + " Thank you for joining" + """
+We use bots on this server. Please follow the steps to gain access to the channels.
+It is important we know who you are so we are going to need to change your nickname to the name you use or plan to use at ESC
+Type `?username your name` using your name. For example in my case I would type,
+```
+?username Ethan Brierley
+```""")
 
 
 @client.event
