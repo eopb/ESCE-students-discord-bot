@@ -54,10 +54,6 @@ async def on_message(message):
             role = discord.utils.get(guild.roles, name="member")
             await message.author.add_roles(role)
             await bot_commands.send(user.mention + " I have changed your nickname to " + username)
-    elif message.content.lower() == '?join':
-        await message.channel.send("Hi")
-        role = discord.utils.get(guild.roles, name="member")
-        await message.author.add_roles(role)
 
 
 client.run(token)
