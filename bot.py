@@ -11,9 +11,21 @@ GUILD = os.getenv('DISCORD_GUILD')
 client = discord.Client()
 
 
+def get_guild():
+    return discord.utils.get(client.guilds, name=GUILD)
+
+
+def get_channel(name):
+    return discord.utils.get(get_guild().channels, name=name)
+
+
+def get_role(name):
+    return discord.utils.get(get_guild().roles, name=name)
+
+
 @client.event
 async def on_ready():
-    guild = discord.utils.get(client.guilds, name=GUILD)
+    guild = get_guild()
     print(
         f'{client.user} is connected to the following guild:\n'
         f'{guild.name}(id: {guild.id})'
@@ -24,8 +36,7 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    welcome_room = discord.utils.get(guild.channels, name="welcome-room")
+    welcome_room = get_channel("welcome-room")
     # maybe post reminder message to non member users ever so often
     await welcome_room.send("Hello and welcome " + member.mention + " Thank you for joining!" + """
 We use bots on this server. Please follow the steps to gain access to the channels.
@@ -38,8 +49,7 @@ Type `?student your name` using your name. For example in my case I would type,
 
 @client.event
 async def on_message(message):
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    bot_commands = discord.utils.get(guild.channels, name="bot-commands")
+    bot_commands = get_channel("bot-commands")
     if message.author == client.user:
         return
 
@@ -51,7 +61,7 @@ async def on_message(message):
             username = username.group(0)[9:]
             user = message.author
             await user.edit(nick=username)
-            role = discord.utils.get(guild.roles, name="member")
+            role = get_role("member")
             await message.author.add_roles(role)
             await bot_commands.send(user.mention + " I have changed your nickname to " + username)
 
