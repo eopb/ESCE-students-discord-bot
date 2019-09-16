@@ -57,6 +57,7 @@ async def on_message(message):
     print(message.channel.name)
 
     if message.channel.name == "welcome-room":
+        print("message in welcome-room")
         username = re.search('\?student .*', message.content)
         if username != None:
             username = username.group(0)[9:]
