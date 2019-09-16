@@ -74,6 +74,7 @@ You can list ranks with,
 You can add ranks that apply to you with `?rank`. For example you could,
 ```
 ?rank a-level-student
+```
 """)
 
 
