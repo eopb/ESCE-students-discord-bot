@@ -40,11 +40,12 @@ async def on_member_join(member):
     # maybe post reminder message to non member users ever so often
     await welcome_room.send("Hello and welcome " + member.mention + " Thank you for joining!" + """
 We use bots on this server. Please follow the steps to gain access to the channels.
-It is important we know who you are so we are going to need to change your nickname to the name you use or plan to use at ESC
+It is important we know who you are. We are going to need to change your nickname to the name you use or plan to use at ESC
 Type `?student your name` using your name. For example in my case I would type,
 ```
 ?student Ethan Brierley
-```""")
+```
+""")
 
 
 @client.event
@@ -63,7 +64,16 @@ async def on_message(message):
             await user.edit(nick=username)
             role = get_role("member")
             await message.author.add_roles(role)
-            await bot_commands.send(user.mention + " I have changed your nickname to " + username)
+            await bot_commands.send(user.mention + " I have changed your nickname to " + username + """
+There are more channels to see. You can access them by adding ranks.
+You can list ranks with,
+```
+?ranks
+```
+You can add ranks that apply to you with `?rank`. For example you could,
+```
+?rank a-level-student
+""")
 
 
 client.run(token)
