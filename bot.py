@@ -11,7 +11,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 client = discord.Client()
 
 
-def get_guild():
+def get_guild():  # Guild is an other word for server
     return discord.utils.get(client.guilds, name=GUILD)
 
 
@@ -24,7 +24,7 @@ def get_role(name):
 
 
 @client.event
-async def on_ready():
+async def on_ready():  # Just prints some basic info to console when the bot is run
     guild = get_guild()
     print(
         f'{client.user} is connected to the following guild:\n'
@@ -35,7 +35,7 @@ async def on_ready():
 
 
 @client.event
-async def on_member_join(member):
+async def on_member_join(member):  # Post tutorial message to new users
     welcome_room = get_channel("welcome-room")
     # maybe post reminder message to non member users ever so often
     await welcome_room.send("Hello and welcome " + member.mention + " Thank you for joining!" + """
@@ -49,7 +49,7 @@ Type `?student your name` using your name. For example in my case I would type,
 
 
 @client.event
-async def on_message(message):
+async def on_message(message):  # Main function that checks all messages for bot commands
     bot_commands = get_channel("bot-commands")
     if message.author == client.user:
         return
