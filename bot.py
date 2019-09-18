@@ -74,7 +74,7 @@ async def subject_prompt(user, s_list):
     await user.add_roles(get_role("member"))
     await get_channel("bot-commands").send(user.mention
                                            + " There are more channels to see. You can access them by adding your subjects with the `?subject` command.\n\n"
-                                           + "You can add any of the subjects that apply.\n```"
+                                           + "You can add all of the subjects that apply.\n```"
                                            + list_subjects(s_list)
                                            + "```"
                                            )
@@ -128,5 +128,27 @@ If you don't fit in any of those categories enter
             else:
                 await message.channel.send(
                     user.mention + " :negative_squared_cross_mark: Error: Invalid join: Please try again.")
+    else:
+        if re.search('\?subject .*', message.content) != None:
+            subject = message.content[9:].strip().lower()
+            named_roles = [role.name for role in user.roles]
+            error_msg = user.mention + \
+                " :negative_squared_cross_mark: Error: Invalid Subject: Please try again: " + \
+                member_efun().mention
+            if "a-level-student" in named_roles:
+                if subject in A_LEVEL_SUBJECTS:
+                    await message.author.add_roles(get_role(subject))
+                    await message.channel.send("Adding you to A Level: " + subject)
+                else:
+                    await message.channel.send(error_msg)
+            elif "btec-student" in named_roles:
+                if subject in BTEC_SUBJECTS:
+                    await message.author.add_roles(get_role(subject + "-btec"))
+                    await message.channel.send("Adding you to BTEC: " + subject)
+                else:
+                    await message.channel.send(error_msg)
+            else:
+                await message.channel.send(
+                    user.mention + " :negative_squared_cross_mark: Error: Not member of alevels or btec: " + member_efun().mention)
 
 client.run(token)
