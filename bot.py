@@ -56,12 +56,13 @@ async def on_message(message):  # Main function that checks all messages for bot
 
     print("New message in " + message.channel.name)
 
+    user = message.author
     bot_commands = get_channel("bot-commands")
     if message.channel.name == "welcome-room":
         print("Message in welcome-room")
         if re.search('\?name .*', message.content) != None:
-            username = message.content[6:]
-            user = message.author
+            username = message.content[6:].strip()
+
             print("Changing user " + user.name + " nickname to " + username)
             await user.edit(nick=username)
             # role = get_role("member")
@@ -81,6 +82,16 @@ If you don't fit in any of those categories enter
 ```
 """)
         elif re.search('\?join .*', message.content) != None:
-            print("debug")
+            join_as = message.content[6:].strip().lower()
+            if join_as == "alevel":
+                await message.author.add_roles(get_role("member"))
+                await message.author.add_roles(get_role("a-level-student"))
+            elif join_as == "btec":
+                await message.author.add_roles(get_role("member"))
+                await message.author.add_roles(get_role("btec-student"))
+            elif join_as == "other":
+                await message.author.add_roles(get_role("member"))
+            else:
+                print("invalid")
 
 client.run(token)
