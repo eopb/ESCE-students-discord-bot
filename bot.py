@@ -36,6 +36,7 @@ async def on_ready():  # Just prints some basic info to console when the bot is 
 
 @client.event
 async def on_member_join(member):  # Post tutorial message to new users
+    print("A member has joined I will greet them.")
     welcome_room = get_channel("welcome-room")
     # maybe post reminder message to non member users ever so often
     await welcome_room.send("Hello and welcome " + member.mention + " Thank you for joining!" + """
@@ -50,22 +51,23 @@ Type `?name your name` using your name. For example in my case I would type,
 
 @client.event
 async def on_message(message):  # Main function that checks all messages for bot commands
-    bot_commands = get_channel("bot-commands")
-    if message.author == client.user:
+    if message.author == client.user:  # Prevents the bot from talking to itself
         return
 
-    print(message.channel.name)
+    print("New message in " + message.channel.name)
 
+    bot_commands = get_channel("bot-commands")
     if message.channel.name == "welcome-room":
-        print("message in welcome-room")
+        print("Message in welcome-room")
         username = re.search('\?name .*', message.content)
         if username != None:
             username = username.group(0)[6:]
             user = message.author
+            print("Changing user " + user.name + " nickname to" + username)
             await user.edit(nick=username)
             role = get_role("member")
             await message.author.add_roles(role)
-            await bot_commands.send(user.mention + " I have changed your nickname to " + username + """
+            await bot_commands.send(user.mention + " I have changed your nickname to " + username + "." + """
 There are more channels to see. You can access them by adding ranks.
 You can list ranks with,
 ```
