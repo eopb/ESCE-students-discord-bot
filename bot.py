@@ -59,25 +59,28 @@ async def on_message(message):  # Main function that checks all messages for bot
     bot_commands = get_channel("bot-commands")
     if message.channel.name == "welcome-room":
         print("Message in welcome-room")
-        username = re.search('\?name .*', message.content)
-        if username != None:
-            username = username.group(0)[6:]
+        if re.search('\?name .*', message.content) != None:
+            username = message.content[6:]
             user = message.author
             print("Changing user " + user.name + " nickname to " + username)
             await user.edit(nick=username)
-            role = get_role("member")
-            await message.author.add_roles(role)
-            await bot_commands.send(user.mention + " I have changed your nickname to " + username + "." + """
-There are more channels to see. You can access them by adding ranks.
-You can list ranks with,
+            # role = get_role("member")
+            # await message.author.add_roles(role)
+            await message.channel.send(user.mention + " I have changed your nickname to " + username + "." + """
+If you are a A level student enter
 ```
-?ranks
+?join alevel
 ```
-You can add ranks that apply to you with `?rank`. For example you could,
+If you are a BTEC student enter
 ```
-?rank a-level-student
+?join btec
+```
+If you don't fit in any of those categories enter
+```
+?join other
 ```
 """)
-
+        elif re.search('\?join .*', message.content) != None:
+            print("debug")
 
 client.run(token)
