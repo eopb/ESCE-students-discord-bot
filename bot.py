@@ -10,6 +10,17 @@ GUILD = os.getenv('DISCORD_GUILD')
 
 client = discord.Client()
 
+A_LEVEL_SUBJECTS = ["maths", "physics", "computer-science",
+                    "further-maths", "chemistry", "biology", "accounting"]
+BTEC_SUBJECTS = ["art"]
+
+
+def list_subjects(subject_array):
+    subjects = ""
+    for subject in subject_array:
+        subjects = subjects + "?subject " + subject + "\n"
+    return subjects
+
 
 def get_guild():  # Guild is an other word for server
     return discord.utils.get(client.guilds, name=GUILD)
@@ -86,6 +97,12 @@ If you don't fit in any of those categories enter
             if join_as == "alevel":
                 await message.author.add_roles(get_role("member"))
                 await message.author.add_roles(get_role("a-level-student"))
+                await get_channel("bot-commands").send(user.mention
+                                                       + " There are more channels to see. You can access them by adding your subjects with the `?subject` command.\n\n"
+                                                       + "You can add any of these subjects.\n```"
+                                                       + list_subjects(A_LEVEL_SUBJECTS)
+                                                       + "```"
+                                                       )
             elif join_as == "btec":
                 await message.author.add_roles(get_role("member"))
                 await message.author.add_roles(get_role("btec-student"))
