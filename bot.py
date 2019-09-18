@@ -33,6 +33,16 @@ def get_channel(name):
 def get_role(name):
     return discord.utils.get(get_guild().roles, name=name)
 
+# 194782646843211777
+
+
+def get_member(id):
+    return discord.utils.get(get_guild().members, id=id)
+
+
+def member_efun():
+    return get_member(194782646843211777)
+
 
 @client.event
 async def on_ready():  # Just prints some basic info to console when the bot is run
@@ -58,6 +68,16 @@ Type `?name your name` using your name. For example in my case I would type,
 ?name Ethan Brierley
 ```
 """)
+
+
+async def subject_prompt(user, s_list):
+    await user.add_roles(get_role("member"))
+    await get_channel("bot-commands").send(user.mention
+                                           + " There are more channels to see. You can access them by adding your subjects with the `?subject` command.\n\n"
+                                           + "You can add any of the subjects that apply.\n```"
+                                           + list_subjects(s_list)
+                                           + "```"
+                                           )
 
 
 @client.event
@@ -95,20 +115,18 @@ If you don't fit in any of those categories enter
         elif re.search('\?join .*', message.content) != None:
             join_as = message.content[6:].strip().lower()
             if join_as == "alevel":
-                await message.author.add_roles(get_role("member"))
                 await message.author.add_roles(get_role("a-level-student"))
-                await get_channel("bot-commands").send(user.mention
-                                                       + " There are more channels to see. You can access them by adding your subjects with the `?subject` command.\n\n"
-                                                       + "You can add any of these subjects.\n```"
-                                                       + list_subjects(A_LEVEL_SUBJECTS)
-                                                       + "```"
-                                                       )
+                await subject_prompt(user, A_LEVEL_SUBJECTS)
             elif join_as == "btec":
-                await message.author.add_roles(get_role("member"))
                 await message.author.add_roles(get_role("btec-student"))
+                await subject_prompt(user, BTEC_SUBJECTS)
             elif join_as == "other":
                 await message.author.add_roles(get_role("member"))
+                await get_channel("general").send(user.mention
+                                                  + " Does not fit in any category "
+                                                  + member_efun().mention)
             else:
-                print("invalid")
+                await message.channel.send(
+                    user.mention + " :negative_squared_cross_mark: Error: Invalid join: Please try again.")
 
 client.run(token)
