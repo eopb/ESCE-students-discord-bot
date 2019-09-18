@@ -63,7 +63,7 @@ async def on_message(message):  # Main function that checks all messages for bot
         if username != None:
             username = username.group(0)[6:]
             user = message.author
-            print("Changing user " + user.name + " nickname to" + username)
+            print("Changing user " + user.name + " nickname to " + username)
             await user.edit(nick=username)
             role = get_role("member")
             await message.author.add_roles(role)
