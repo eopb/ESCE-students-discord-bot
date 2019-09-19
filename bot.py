@@ -88,7 +88,6 @@ async def on_message(message):  # Main function that checks all messages for bot
     print("New message in " + message.channel.name)
 
     user = message.author
-    bot_commands = get_channel("bot-commands")
     if message.channel.name == "welcome-room":
         print("Message in welcome-room")
         if re.search('\?name .*', message.content) != None:
