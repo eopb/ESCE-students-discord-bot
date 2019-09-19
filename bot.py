@@ -85,7 +85,8 @@ async def on_message(message):  # Main function that checks all messages for bot
     if message.author == client.user:  # Prevents the bot from talking to itself
         return
 
-    print("New message in " + message.channel.name)
+    print("New message in " + message.channel.name +
+          "\n\nMessage Content: " + message.content)
 
     user = message.author
     if message.channel.name == "welcome-room":
