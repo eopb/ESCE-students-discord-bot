@@ -96,8 +96,6 @@ async def on_message(message):  # Main function that checks all messages for bot
 
             print("Changing user " + user.name + " nickname to " + username)
             await user.edit(nick=username)
-            # role = get_role("member")
-            # await message.author.add_roles(role)
             await message.channel.send(user.mention + " I have changed your nickname to " + username + "." + """
 If you are a A level student enter
 ```
