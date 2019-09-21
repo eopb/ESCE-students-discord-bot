@@ -80,9 +80,10 @@ async def subject_prompt(user, s_list):
                                            )
 
 
-@client.event
-async def on_message(message):  # Main function that checks all messages for bot commands
-    if message.author == client.user:  # Prevents the bot from talking to itself
+# Main function that checks all messages for bot commands
+async def on_message_or_edit(message):
+    # Prevents the bot from talking to itself or in other guilds
+    if message.author == client.user or str(message.guild) != GUILD:
         return
 
     print("New message in " + message.channel.name +
@@ -148,5 +149,15 @@ If you don't fit in any of those categories enter
             else:
                 await message.channel.send(
                     user.mention + " :negative_squared_cross_mark: Error: Not member of alevels or btec: " + member_efun().mention)
+
+
+@client.event
+async def on_message(message):
+    await on_message_or_edit(message)
+
+
+@client.event
+async def on_message_edit(before, after):
+    await on_message_or_edit(after)
 
 client.run(token)
