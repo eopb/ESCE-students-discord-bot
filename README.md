@@ -1,15 +1,15 @@
 # ESCE students discord bot
 
-https://realpython.com/how-to-make-a-discord-bot-python/
-https://github.com/Rapptz/discord.py
-https://discordpy.readthedocs.io/en/latest/
-https://discordpy.readthedocs.io/en/latest/api.html#
+Discord bot thats sorts students into subject categories giving them access to subject channels.
 
-python3
+# Requirements
+
 ```
 pip3 install -U discord.py
-pip install -U python-dotenv
+pip3 install -U python-dotenv
 ```
+
+# cron file
 
 ```
  Edit this file to introduce tasks to be run by cron.
@@ -37,5 +37,4 @@ pip install -U python-dotenv
 # m h  dom mon dow   command
 
 @reboot sh /home/pi/Documents/bot/esce-students-discord-bot/launch.sh 2>&1 | tee /home/pi/Documents/bot/esce-students-discord-bot/log
-
 ```
