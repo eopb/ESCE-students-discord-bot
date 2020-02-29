@@ -150,6 +150,12 @@ If you don't fit in any of those categories enter
                 await message.channel.send(
                     user.mention + " :negative_squared_cross_mark: Error: Not member of alevels or btec: " + member_efun().mention)
 
+@client.command(aliases = ['8ball', '8Ball'])
+async def _8Ball(ctx, *, question):
+
+    #awaits a question and then sends a random choice of preset answers
+    
+    await ctx.send(f'Question: {question}\n{random.choice(variables.eResponses)}')
 
 @client.event
 async def on_message(message):
