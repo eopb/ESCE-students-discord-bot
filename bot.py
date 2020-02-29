@@ -12,7 +12,7 @@ client = discord.Client()
 
 A_LEVEL_SUBJECTS = ["maths", "physics", "computer-science",
                     "further-maths", "chemistry", "biology", "accounting"]
-eResponses = [
+eightBallResponses = [
     'As I see it, yes.',
     'Ask again later.',
     'Better not tell you now.',
